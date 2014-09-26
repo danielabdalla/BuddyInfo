@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 
 //Test edit made from site
+
+//Branch change test
 public class AddressBook {
 	private ArrayList<BuddyInfo> buddies;
 
