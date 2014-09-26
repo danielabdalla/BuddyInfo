@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-
+//Test edit made from site
 public class AddressBook {
 	private ArrayList<BuddyInfo> buddies;
 
