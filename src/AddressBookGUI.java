@@ -10,8 +10,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 
@@ -49,7 +47,7 @@ public class AddressBookGUI extends JFrame {
            
             	buddyScreen = new JTextArea(5,20);
             	buddyScreen.setText("Test");
-            	buddyScreen.setSize(200, 200);
+            	frame.setSize(200, 200);
             	buddyScreen.setEditable(false);
             	buddyScreen.setVisible(true);
             	frame.getContentPane().add(buddyScreen);
@@ -111,6 +109,11 @@ public class AddressBookGUI extends JFrame {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
+        			Object[] options = {"OK"};
+        		    int n = JOptionPane.showOptionDialog(frame,
+        		    "Success!","Save",JOptionPane.PLAIN_MESSAGE,
+        		    JOptionPane.QUESTION_MESSAGE,null,options,
+        		    options[0]);
         		}
         	}
         });
