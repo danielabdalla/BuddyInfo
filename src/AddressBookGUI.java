@@ -1,4 +1,3 @@
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedWriter;
@@ -110,7 +109,7 @@ public class AddressBookGUI extends JFrame {
 						e1.printStackTrace();
 					}
         			Object[] options = {"OK"};
-        		    int n = JOptionPane.showOptionDialog(frame,
+        		    JOptionPane.showOptionDialog(frame,
         		    "Success!","Save",JOptionPane.PLAIN_MESSAGE,
         		    JOptionPane.QUESTION_MESSAGE,null,options,
         		    options[0]);
