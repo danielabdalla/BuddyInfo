@@ -1,38 +1,48 @@
-import java.util.ArrayList;
+import javax.swing.DefaultListModel;
+import javax.swing.ListModel;
+import javax.swing.event.ListDataListener;
 
 //Test edit made from site
 
 //Branch change test
-public class AddressBook {
-	private ArrayList<BuddyInfo> buddies;
+public class AddressBook implements ListModel<BuddyInfo> {
+	private DefaultListModel<BuddyInfo> buddies;
 
 
 	public AddressBook() {
-		buddies = new ArrayList<BuddyInfo>();
+		buddies = new DefaultListModel<BuddyInfo>();
 	}
 	
 	public void addBuddy(BuddyInfo buddy){
 		if(buddy != null){
-			buddies.add(buddy);
+			buddies.addElement(buddy);
 		}
 	}
 	
 	public void removeBuddy(BuddyInfo buddy){
-		buddies.remove(buddy);
+		buddies.removeElement(buddy);
 	}
 	
 	public String displayAddressBook(){
 		return buddies.toString();
 	}
-		
-	public static void main(String args[]){
-		System.out.println("Address book");
-		BuddyInfo buddy = new BuddyInfo("Dan", "Canada", "123456");
-		BuddyInfo buddy2 = new BuddyInfo("Bob", "Canada", "4839483");
-		AddressBook addressbook = new AddressBook();
-		addressbook.addBuddy(buddy);
-		addressbook.addBuddy(buddy2);
-		System.out.println(addressbook.displayAddressBook());
-		addressbook.removeBuddy(buddy);
+
+	@Override
+	public void addListDataListener(ListDataListener l) {
 	}
+
+	@Override
+	public BuddyInfo getElementAt(int index) {
+		return buddies.get(index);
+	}
+
+	@Override
+	public int getSize() {
+		return buddies.size();
+	}
+
+	@Override
+	public void removeListDataListener(ListDataListener l) {
+	}
+		
 }
