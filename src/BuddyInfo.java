@@ -4,11 +4,16 @@ public class BuddyInfo {
 	private String name;
 	private String address;
 	private String phone;
+	private int age;
 	
 	public BuddyInfo(String name, String address, String phone){
 		this.name = name;
 		this.address = address;
 		this.phone = phone;
+	}
+	
+	public BuddyInfo(BuddyInfo buddy){
+		this(buddy.getName(), buddy.getAddress(), buddy.getPhone());
 	}
 
 	public String getName() {
@@ -37,6 +42,25 @@ public class BuddyInfo {
 	
 	public String toString(){
 		return name + ", " + address + ", " + phone;
+	}
+	
+	public String greeting(){
+		return "Hello " + name;
+	}
+	
+	public int getAge(){
+		return age;
+	}
+	
+	public void setAge(int age){
+		this.age = age;
+	}
+	
+	public boolean isOver18(){
+		if(age >= 18){
+			return true;
+		}
+		return false;
 	}
 	
 	public boolean equals(Object obj){
