@@ -1,4 +1,3 @@
-
 public class BuddyInfo {
 
 	private String name;
@@ -41,7 +40,7 @@ public class BuddyInfo {
 	}
 	
 	public String toString(){
-		return name + ", " + address + ", " + phone;
+		return "\n"+name + "$" + address + "$" + phone;
 	}
 	
 	public String greeting(){
@@ -73,4 +72,10 @@ public class BuddyInfo {
 		}
 		return false;
 		}
+	
+	public static BuddyInfo importData(String data){
+		String[] buddy = data.split("\\p{Punct}");
+		return new BuddyInfo(buddy[0],buddy[1],buddy[2]);
+	}
+	
 }
