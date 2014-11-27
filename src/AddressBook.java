@@ -1,17 +1,26 @@
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 //Test edit made from site
 
 //Branch change test
-public class AddressBook {
+public class AddressBook implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private ArrayList<BuddyInfo> buddies;
 
 
@@ -30,10 +39,7 @@ public class AddressBook {
 	}
 	
 	public String displayAddressBook(){
-		return buddies.toString().replace(",","")
-				.replace("]", "")
-				.replace("[","")
-				.trim();
+		return buddies.toString().replace(",","").replace("]", "").replace("[","").trim();	
 	}
 
 	public int getSize() {
@@ -71,6 +77,23 @@ public class AddressBook {
 			}
 	}
 	
+	public void exportSerializable() throws IOException{
+		FileOutputStream stream = new FileOutputStream("export1.txt");
+		ObjectOutputStream oos = new ObjectOutputStream(stream);
+		oos.writeObject(this);
+		stream.close();
+		oos.close();
+	}
+	
+	public void importSerializable() throws IOException, ClassNotFoundException {
+		FileInputStream stream = new FileInputStream("export1.txt");
+		ObjectInputStream ois = new ObjectInputStream(stream);
+		AddressBook book = (AddressBook) ois.readObject();
+		System.out.print(book.displayAddressBook());
+		stream.close();
+		ois.close();
+	}
+	
 	public void importFromText() throws IOException{
 		BufferedReader read = null;
 		
@@ -79,7 +102,11 @@ public class AddressBook {
 			read = new BufferedReader(new FileReader(file));
 			String line;
 			while((line = read.readLine()) != null){
-				System.out.println(line);
+				if (!line.equals("")) // don't write out blank lines
+			    {
+					System.out.println(line);
+			    }
+				
 			}
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -99,10 +126,28 @@ public class AddressBook {
 		BuddyInfo buddy3 = BuddyInfo.importData(data);
 		book.addBuddy(buddy3);
 		book.export();
+		try {
+			book.exportSerializable();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		in.close();
-		System.out.println("");
+		
 		try {
 			book.importFromText();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		System.out.println("");
+		
+		try {
+			book.importSerializable();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

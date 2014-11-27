@@ -1,5 +1,11 @@
-public class BuddyInfo {
+import java.io.Serializable;
 
+public class BuddyInfo implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String name;
 	private String address;
 	private String phone;
@@ -40,7 +46,7 @@ public class BuddyInfo {
 	}
 	
 	public String toString(){
-		return "\n"+name + "$" + address + "$" + phone;
+		return name + "$" + address + "$" + phone;
 	}
 	
 	public String greeting(){
