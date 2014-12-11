@@ -13,6 +13,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
 //Test edit made from site
 
 //Branch change test
@@ -114,6 +122,59 @@ public class AddressBook implements Serializable{
 		}
 	}
 	
+	public String toXML(){
+		String xml = "";
+		xml += "<AddressBook>\n";
+		for(BuddyInfo b : buddies){
+			xml += "\t<BuddyInfo>\n"
+			 + "\t\t<name> " + b.getName() + " </name>\n"
+			 + "\t\t<address> " + b.getAddress() + " </address>\n"
+			 + "\t\t<phone> " + b.getPhone() + " </phone>\n"
+			 + "\t</BuddyInfo>\n";
+		}
+		xml += "</AddressBook>";
+		return xml;
+	}
+	
+	public void exportToXML(){
+		String xml = toXML();
+		BufferedWriter writer = null;
+		try {
+			writer = new BufferedWriter(new FileWriter("export.xml"));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			writer.write(xml);
+			}
+		catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			writer.close();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
+	
+	public void importFromXMLFileDOM() throws Exception{
+		File f = new File("export.xml");
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder d = factory.newDocumentBuilder();
+		Document doc = d.parse(f);
+		
+		System.out.println("Root: " + doc.getDocumentElement().getNodeName());
+		
+		NodeList lst = doc.getDocumentElement().getChildNodes();
+		for(int i = 0; i < lst.getLength(); i++){
+			Node n = lst.item(i);
+			System.out.println("Child: " + n.getNodeName() + " ===> " + n.getTextContent());
+		}
+	}
+	
 	public static void main(String args[]){
 		String data = "";
 		AddressBook book = new AddressBook();
@@ -121,6 +182,15 @@ public class AddressBook implements Serializable{
 		BuddyInfo buddy2 = new BuddyInfo("sd","ads","asd");
 		book.addBuddy(buddy1);
 		book.addBuddy(buddy2);
+		System.out.print(book.toXML());
+		book.exportToXML();
+		try {
+			book.importFromXMLFileDOM();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		/*
 		Scanner in = new Scanner(System.in);
 		data = in.next();
 		BuddyInfo buddy3 = BuddyInfo.importData(data);
@@ -151,7 +221,7 @@ public class AddressBook implements Serializable{
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 	}
 	
 }
